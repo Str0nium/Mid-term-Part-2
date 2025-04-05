@@ -99,7 +99,7 @@ int main() {
                             item.setPrice(newPrice);
                         }
                         cout << "Item with ID " << itemId << " updated successfully.\n";
-                        goto update_end; // Simple way to exit nested loop
+                        goto update_end;
                     }
                 }
                 cout << "Item with ID " << itemId << " not found.\n";
