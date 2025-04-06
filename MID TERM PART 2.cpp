@@ -16,24 +16,24 @@ public:
     Item(int id, string name, int quantity, double price) :
         id(id), name(name), quantity(quantity), price(price) {}
 
-    int getId() const { return id; }
-    string getName() const { return name; }
-    int getQuantity() const { return quantity; }
-    double getPrice() const { return price; }
+    int getId() { return id; }
+    string getName() { return name; }
+    int getQuantity() { return quantity; }
+    double getPrice() { return price; }
 
     void setName(string name) { this->name = name; }
     void setQuantity(int quantity) { this->quantity = quantity; }
     void setPrice(double price) { this->price = price; }
 
-    void display() const {
-        cout << "ID:       " << id << endl;
-        cout << "Name:     " << name << endl;
-        cout << "Quantity: " << quantity << endl;
-        cout << "Price:    " << fixed << setprecision(2) << price << endl;
+    void display() {
+        cout << "ID:         " << id << endl;
+        cout << "Name:       " << name << endl;
+        cout << "Quantity:   " << quantity << endl;
+        cout << "Price:      " << setprecision(2) << price << endl;
     }
 
-    void displayTableRow() const {
-        cout << setw(5) << id << setw(20) << name << setw(10) << quantity << setw(10) << fixed << setprecision(2) << price << endl;
+    void displayTableRow() {
+        cout << setw(5) << id << setw(20) << name << setw(10) << quantity << setw(10) << setprecision(2) << price << endl;
     }
 };
 
@@ -54,7 +54,7 @@ int main() {
         cout << "8. Exit\n";
         cout << "Enter your choice: ";
         cin >> choice;
-        cin.ignore(); 
+        cin.ignore();
 
         switch (choice) {
             case 1: {
@@ -77,49 +77,61 @@ int main() {
                 cout << "Enter the ID of the item to update: ";
                 cin >> itemId;
                 cin.ignore();
+
+                bool found = false;
                 for (auto& item : inventory) {
                     if (item.getId() == itemId) {
                         cout << "Found item: " << item.getName() << endl;
+
                         string newName;
                         cout << "Enter new name (leave blank to keep): ";
                         getline(cin, newName);
                         if (!newName.empty()) {
                             item.setName(newName);
                         }
+
                         int newQuantity;
                         cout << "Enter new quantity (-1 to keep): ";
                         cin >> newQuantity;
                         if (newQuantity != -1) {
                             item.setQuantity(newQuantity);
                         }
+
                         double newPrice;
                         cout << "Enter new price (-1 to keep): ";
                         cin >> newPrice;
                         if (newPrice != -1) {
                             item.setPrice(newPrice);
                         }
+
                         cout << "Item with ID " << itemId << " updated successfully.\n";
-                        goto update_end;
+                        found = true;
+                        break;
                     }
                 }
-                cout << "Item with ID " << itemId << " not found.\n";
-            update_end:;
+
+                if (!found) {
+                    cout << "Item with ID " << itemId << " not found.\n";
+                }
                 break;
             }
             case 3: {
                 int itemId;
                 cout << "Enter the ID of the item to remove: ";
                 cin >> itemId;
+                bool removed = false;
                 for (size_t i = 0; i < inventory.size(); ++i) {
                     if (inventory[i].getId() == itemId) {
                         cout << "Removed item: " << inventory[i].getName() << endl;
                         inventory.erase(inventory.begin() + i);
                         cout << "Item with ID " << itemId << " has been removed from the inventory.\n";
-                        goto remove_end;
+                        removed = true;
+                        break;
                     }
                 }
-                cout << "Item with ID " << itemId << " not found.\n";
-            remove_end:;
+                if (!removed) {
+                    cout << "Item with ID " << itemId << " not found.\n";
+                }
                 cin.ignore();
                 break;
             }
@@ -127,7 +139,7 @@ int main() {
                 cout << "\n--- Inventory ---\n";
                 cout << setw(5) << "ID" << setw(20) << "Name" << setw(10) << "Quantity" << setw(10) << "Price" << endl;
                 cout << setfill('-') << setw(45) << "" << setfill(' ') << endl;
-                for (const auto& item : inventory) {
+                for (auto& item : inventory) {
                     item.displayTableRow();
                 }
                 cout << "-------------------\n";
@@ -137,16 +149,19 @@ int main() {
                 int itemId;
                 cout << "Enter the ID of the item to search for: ";
                 cin >> itemId;
-                for (const auto& item : inventory) {
+                bool found = false;
+                for (auto& item : inventory) {
                     if (item.getId() == itemId) {
                         cout << "\n--- Item Details ---\n";
                         item.display();
                         cout << "----------------------\n";
-                        goto search_end;
+                        found = true;
+                        break;
                     }
                 }
-                cout << "Item with ID " << itemId << " not found.\n";
-            search_end:;
+                if (!found) {
+                    cout << "Item with ID " << itemId << " not found.\n";
+                }
                 cin.ignore();
                 break;
             }
@@ -158,7 +173,7 @@ int main() {
                 cout << setw(5) << "ID" << setw(20) << "Name" << setw(10) << "Quantity" << endl;
                 cout << setfill('-') << setw(35) << "" << setfill(' ') << endl;
                 bool foundLowStock = false;
-                for (const auto& item : inventory) {
+                for (auto& item : inventory) {
                     if (item.getQuantity() <= 5) {
                         cout << setw(5) << item.getId() << setw(20) << item.getName() << setw(10) << item.getQuantity() << endl;
                         foundLowStock = true;
