@@ -166,7 +166,7 @@ int main() {
                 break;
             }
             case 6:
-                cout << "Sorting functionality is not implemented in this version.\n";
+                cout << "i don't know how to make :D\n";
                 break;
             case 7: {
                 cout << "\n--- Low Stock Items (Quantity <= 5) ---\n";
