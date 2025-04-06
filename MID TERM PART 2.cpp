@@ -49,7 +49,7 @@ int main() {
         cout << "3. Remove Item\n";
         cout << "4. Display All Items\n";
         cout << "5. Search Item\n";
-        cout << "6. Sort Items (Not Implemented)\n";
+        cout << "6. Sort Items\n";
         cout << "7. Display Low Stock Items\n";
         cout << "8. Exit\n";
         cout << "Enter your choice: ";
