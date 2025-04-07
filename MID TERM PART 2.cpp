@@ -169,7 +169,7 @@ int main() {
                 cout << "i don't know how to make :D\n";
                 break;
             case 7: {
-                cout << "\n--- Low Stock Items (Quantity <= 5) ---\n";
+                cout << "\n--- Low Stock Items ---\n";
                 cout << setw(5) << "ID" << setw(20) << "Name" << setw(10) << "Quantity" << endl;
                 cout << setfill('-') << setw(35) << "" << setfill(' ') << endl;
                 bool foundLowStock = false;
